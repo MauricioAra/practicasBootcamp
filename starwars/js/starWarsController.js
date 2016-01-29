@@ -21,7 +21,7 @@ var starWarsCtrl = (function(){
                         '<td>' + characterList[i].eye_color + '</td>'+
                         '<td>' + characterList[i].birth_year + '</td>'+
                         '<td>' + characterList[i].gender + '</td>'+
-                        '<td>' + '<button id="'+i+'" class="button-view">View</button>' + '</td>'+
+                        '<td>' + '<button id="'+i+'" class="btn btn-success button-view">View</button>' + '</td>'+
                       '</tr>';
       }
       $('#characters-table').append(content);
