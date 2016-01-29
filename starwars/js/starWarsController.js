@@ -7,11 +7,11 @@ var starWarsCtrl = (function(){
 
   function setTable(index){
 
-   var characterList = starWarsApi.getAll(index);
-
+      var characterList = starWarsApi.getAll(index);
+      var id;
       var content;
+      for(i=0; i<characterList.length; i++){
 
-      for(i=1; i<characterList.length; i++){
         content += '<tr>' +
                         '<td>' + characterList[i].name + '</td>'+
                         '<td>' + characterList[i].height +'</td>'+
@@ -21,9 +21,10 @@ var starWarsCtrl = (function(){
                         '<td>' + characterList[i].eye_color + '</td>'+
                         '<td>' + characterList[i].birth_year + '</td>'+
                         '<td>' + characterList[i].gender + '</td>'+
-                        '<td>' + '<button id="'+i+'" class="button-view">View</button>' + '</td>'+
+                        '<td>' + '<button id="'+(id = i + 1 )+'" class="button-view">View</button>' + '</td>'+
                       '</tr>';
       }
+      
       $('#characters-table').append(content);
 
       $('.button-view').click(function(evt){

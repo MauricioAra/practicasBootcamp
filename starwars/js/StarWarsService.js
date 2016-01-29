@@ -23,8 +23,6 @@ var starWarsApi = (function(){
       customs.push(custom);
     }
 
-    console.log(customs);
-
     return customs;
 
   };
