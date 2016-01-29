@@ -1,23 +1,17 @@
 var starWarsCtrl = (function(){
 
   function getOne(id){
-    var character = starWarsService.getOne(id);
+    var character = starWarsApi.getOne(id);
     return character;
   }
 
-
-
   function setTable(index){
 
-   var characterList = [{name:"pedro",height:"18ocm",mass:"20",hair_color:"brown",
-   skin_color:"white",eye_color:"green",
-   birth_year:"1990",gender:"male"},{name:"pedro",height:"18ocm",mass:"20",hair_color:"brown",
-   skin_color:"white",eye_color:"green",
-   birth_year:"1990",gender:"male"}];
-
+      var characterList = starWarsApi.getAll(index);
+      var id;
       var content;
-
       for(i=0; i<characterList.length; i++){
+
         content += '<tr>' +
                         '<td>' + characterList[i].name + '</td>'+
                         '<td>' + characterList[i].height +'</td>'+
@@ -27,16 +21,27 @@ var starWarsCtrl = (function(){
                         '<td>' + characterList[i].eye_color + '</td>'+
                         '<td>' + characterList[i].birth_year + '</td>'+
                         '<td>' + characterList[i].gender + '</td>'+
-                        '<td>' + '<button id="'+i+'" class="button-view">View</button>' + '</td>'+
+                        '<td>' + '<button id="'+(id = i + 1 )+'" class="btn btn-success button-view">View</button>' + '</td>'+
                       '</tr>';
       }
+
       $('#characters-table').append(content);
 
       $('.button-view').click(function(evt){
-         getOne(evt.target.id);
-         $('#myModal').on('shown.bs.modal', function () {
-           
-         })
+
+        var character =  getOne(evt.target.id);
+
+        $('#myModal').modal('show');
+
+        $('#modalTittle').text(character.name);
+        $('#character-height').text(character.height);
+        $('#character-mass').text(character.mass);
+        $('#character-hair-color').text(character.hair_color);
+        $('#character-skin-color').text(character.skin_color);
+        $('#character-eye-color').text(character.eye_color);
+        $('#character-birth-year').text(character.birth_year);
+        $('#character-gender').text(character.gender);
+
       });
   }
   function init(){
@@ -44,7 +49,6 @@ var starWarsCtrl = (function(){
   }
 
   return {
-    getCharacter: getOne,
     getAll: setTable,
     initialize: init
   };

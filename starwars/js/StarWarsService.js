@@ -1,4 +1,4 @@
-function starWarsApi() {
+var starWarsApi = (function(){
 
   function getAll(page) {
     var url = 'http://swapi.co/api/people/?page='+page
@@ -6,29 +6,25 @@ function starWarsApi() {
     var results = data.results;
 
     var customs = [];
-    var custom = {
-      name: '',
-      height: '',
-      mass: '',
-      hair_color: '',
-      skin_color: '',
-      eye_color: '',
-      birth_year: '',
-      gender: '',
-    };
 
-    for(var result of results) {
-      custom.name = result.name;
-      custom.height = result.height;
-      custom.mass = result.mass;
-      custom.hair_color = result.hair_color;
-      custom.skin_color = result.skin_color;
-      custom.eye_color = result.eye_color;
-      custom.birth_year = result.birth_year;
-      custom.gender = result.gender;
+    for(var i =0; i< results.length; i++) {
+
+      var custom  = {};
+
+      custom.name = results[i].name;
+      custom.height = results[i].height;
+      custom.mass = results[i].mass;
+      custom.hair_color = results[i].hair_color;
+      custom.skin_color = results[i].skin_color;
+      custom.eye_color = results[i].eye_color;
+      custom.birth_year = results[i].birth_year;
+      custom.gender = results[i].gender;
+
+      customs.push(custom);
     }
 
     return customs;
+
   };
 
   function testHTTP(url) {
@@ -57,8 +53,4 @@ function starWarsApi() {
     getOne: getOne,
     getPlanets: getPlanets
   }
-};
-
-var testingApi = starWarsApi();
-
-console.log(testingApi.getOne(1));
+})();

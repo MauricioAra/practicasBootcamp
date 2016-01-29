@@ -45,22 +45,56 @@
         <th>Gender</th>
       </tr>
     </table>
+    <nav>
+      <ul class="pager">
+        <li class="previous"><a id="previous-page"><span aria-hidden="true">&larr;</span></a></li>
+        <li class="next"><a id="next-page"><span aria-hidden="true">&rarr;</span></a></li>
+      </ul>
+    </nav>
   </div>
 </div>
 <!-- .modal-content -->
-<div data-target="#myModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modal title</h4>
+        <h4 id="modalTittle" class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <label>Height: </label>
+            <p id="character-height"></p>
+          </li>
+          <li class="list-group-item">
+            <label>Mass: </label>
+            <p id="character-mass"></p>
+          </li>
+          <li class="list-group-item">
+            <label>Hair Color: </label>
+            <p id="character-hair-color"></p>
+          </li>
+          <li class="list-group-item">
+            <label>Skin Color: </label>
+            <p id="character-skin-color"></p>
+          </li>
+          <li class="list-group-item">
+            <label>Eye Color: </label>
+            <p id="character-eye-color"></p>
+          </li>
+          <li class="list-group-item">
+            <label>Birth Year: </label>
+            <p id="character-birth-year"></p>
+          </li>
+          <li class="list-group-item">
+            <label>Gender: </label>
+            <p id="character-gender"></p>
+          </li>
+        </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
