@@ -16,14 +16,16 @@ var starWarsCtrl = (function(){
 
   function nextPage(){
     page ++;
+    $('.pagination'+(page-1)).hide('slow');
     setTable(page);
   }
-  function previousPage(index){
-    page --;
+  function previousPage(){
     if(page == 1){
       alert("No hay menos paginas!");
     }else{
-    setTable(index);
+      $('.pagination'+(page)).hide();
+      page --;
+    setTable(page);
     }
   }
 
@@ -35,7 +37,7 @@ var starWarsCtrl = (function(){
       var id;
       for(i=0; i<characterList.length; i++){
 
-        content += '<tr>' +
+        content += '<tr class=pagination'+index+'>' +
                         '<td>' + characterList[i].name + '</td>'+
                         '<td>' + characterList[i].height +'</td>'+
                         '<td>' + characterList[i].mass + '</td>'+
@@ -44,7 +46,7 @@ var starWarsCtrl = (function(){
                         '<td>' + characterList[i].eye_color + '</td>'+
                         '<td>' + characterList[i].birth_year + '</td>'+
                         '<td>' + characterList[i].gender + '</td>'+
-                        '<td>' + '<button id="'+(id = i + 1 )+'" class="button-view">View</button>' + '</td>'+
+                        '<td>' + '<button id="'+characterList[i].id+'" class="button-view btn btn-success">View</button>' + '</td>'+
                       '</tr>';
       }
       $('#characters-table').append(content);
