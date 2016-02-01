@@ -10,53 +10,19 @@ var starWarsCtrl = (function(){
   });
 
   function getOne(id){
-    var character = starWarsApi.getOne(id);
-    return character;
-  }
+    starWarsApi.getOne(id, processRequestForSelected);
+  };
 
-  function nextPage(){
-    page ++;
-    $('.pagination'+(page-1)).hide('slow');
-    setTable(page);
-  }
-  function previousPage(){
-    if(page == 1){
-      alert("No hay menos paginas!");
-    }else{
-      $('.pagination'+(page)).hide();
-      page --;
-    setTable(page);
-    }
-  }
-
-  function setTable(index){
-
-   var characterList = starWarsApi.getAll(index);
-
-      var content;
-      var id;
-      for(i=0; i<characterList.length; i++){
-
-        content += '<tr class=pagination'+index+'>' +
-                        '<td>' + characterList[i].name + '</td>'+
-                        '<td>' + characterList[i].height +'</td>'+
-                        '<td>' + characterList[i].mass + '</td>'+
-                        '<td>' + characterList[i].hair_color + '</td>'+
-                        '<td>' + characterList[i].skin_color + '</td>'+
-                        '<td>' + characterList[i].eye_color + '</td>'+
-                        '<td>' + characterList[i].birth_year + '</td>'+
-                        '<td>' + characterList[i].gender + '</td>'+
-                        '<td>' + '<button id="'+characterList[i].id+'" class="button-view btn btn-success">View</button>' + '</td>'+
-                      '</tr>';
-      }
-      $('#characters-table').append(content);
-
-      $('.button-view').click(function(evt){
-
-        var character =  getOne(evt.target.id);
-
+  /*
+  * allows to process request for one personUrl
+  */
+  function processRequestForSelected(req) {
+    // body...
+    var httpReq = req.target;
+    if (httpReq.readyState === XMLHttpRequest.DONE) {
+      if(httpReq.status === 200) {
+        var character = JSON.parse(httpReq.response);
         $('#myModal').modal('show');
-
         $('#modalTittle').text(character.name);
         $('#character-height').text(character.height);
         $('#character-mass').text(character.mass);
@@ -65,17 +31,92 @@ var starWarsCtrl = (function(){
         $('#character-eye-color').text(character.eye_color);
         $('#character-birth-year').text(character.birth_year);
         $('#character-gender').text(character.gender);
+      }
+    }else{
 
-      });
+    }
+  }
+
+  function nextPage(){
+    page ++;
+    $('.pagination'+(page-1)).remove();
+    getAll(page);
+  }
+  function previousPage(){
+    if(page == 1){
+      alert("No hay menos paginas!");
+    }else{
+      $('.pagination'+(page)).remove();
+      page --;
+    getAll(page);
+    }
+  }
+  /*
+  *allows to select data to show.
+  */
+  function processRequestForAll(req) {
+    var httpReq = req.target;
+    if (httpReq.readyState === XMLHttpRequest.DONE) {
+      if (httpReq.status === 200) {
+        var results = JSON.parse(httpReq.response);
+        results = results.results;
+        var customs = [];
+        for(var i =0; i< results.length; i++) {
+          var custom  = {};
+          custom.name = results[i].name;
+          custom.height = results[i].height;
+          custom.mass = results[i].mass;
+          custom.hair_color = results[i].hair_color;
+          custom.skin_color = results[i].skin_color;
+          custom.eye_color = results[i].eye_color;
+          custom.birth_year = results[i].birth_year;
+          custom.gender = results[i].gender;
+          custom.id = results[i].url;
+
+          customs.push(custom);
+        }
+        buildTable(customs);
+      }else{
+        console.log('Something went');
+      }
+    }
+  };
+
+  function buildTable(customs) {
+
+    var content;
+    var id;
+    for(i=0; i<customs.length; i++){
+
+      content += '<tr class=pagination'+page+'>' +
+                      '<td>' + customs[i].name + '</td>'+
+                      '<td>' + customs[i].height +'</td>'+
+                      '<td>' + customs[i].mass + '</td>'+
+                      '<td>' + customs[i].hair_color + '</td>'+
+                      '<td>' + customs[i].skin_color + '</td>'+
+                      '<td>' + customs[i].eye_color + '</td>'+
+                      '<td>' + customs[i].birth_year + '</td>'+
+                      '<td>' + customs[i].gender + '</td>'+
+                      '<td>' + '<button id="'+customs[i].id+'" class="button-view btn btn-success">View</button>' + '</td>'+
+                    '</tr>';
+    }
+    $('#characters-table').append(content);
+
+    $('.button-view').click(function(evt){
+      getOne(evt.target.id);
+    });
+  }
+  function getAll(index){
+   var characterList = starWarsApi.getAll(index, processRequestForAll);
   }
   function init(){
-    setTable(1);
+    getAll(1);
   }
 
   return {
     nextPage: nextPage,
     prevPage: previousPage,
-    getAll: setTable,
+    getAll: getAll,
     initialize: init
   };
 

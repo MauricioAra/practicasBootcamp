@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <div class="container">
 <div class="row">
   <div class="col-md-12">
     <div class="jumbotron">
@@ -53,12 +54,15 @@
     </nav>
   </div>
 </div>
+</div>
 <!-- .modal-content -->
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <h4 id="modalTittle" class="modal-title"></h4>
       </div>
       <div class="modal-body">
@@ -102,8 +106,8 @@
   <script src="js/vendor/jquery-1.11.2.min.js"></script>
   <script src="js/vendor/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/starWarsController.js"></script>
   <script src="js/StarWarsService.js"></script>
+  <script src="js/starWarsController.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
