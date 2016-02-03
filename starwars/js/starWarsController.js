@@ -14,10 +14,9 @@ var starWarsCtrl = (function(){
   };
 
   /*
-  * allows to process request for one personUrl
+  * allows to process request for one star wars character
   */
   function processRequestForSelected(req) {
-    // body...
     var httpReq = req.target;
     if (httpReq.readyState === XMLHttpRequest.DONE) {
       if(httpReq.status === 200) {
@@ -52,7 +51,7 @@ var starWarsCtrl = (function(){
     }
   }
   /*
-  *allows to select data to show.
+  * function to process the main request
   */
   function processRequestForAll(req) {
     var httpReq = req.target;
@@ -60,24 +59,9 @@ var starWarsCtrl = (function(){
       if (httpReq.status === 200) {
         var results = JSON.parse(httpReq.response);
         results = results.results;
-        var customs = [];
-        for(var i =0; i< results.length; i++) {
-          var custom  = {};
-          custom.name = results[i].name;
-          custom.height = results[i].height;
-          custom.mass = results[i].mass;
-          custom.hair_color = results[i].hair_color;
-          custom.skin_color = results[i].skin_color;
-          custom.eye_color = results[i].eye_color;
-          custom.birth_year = results[i].birth_year;
-          custom.gender = results[i].gender;
-          custom.id = results[i].url;
-
-          customs.push(custom);
-        }
-        buildTable(customs);
+        buildTable(results);
       }else{
-        console.log('Something went');
+        console.log('Something wrong');
       }
     }
   };
@@ -97,7 +81,7 @@ var starWarsCtrl = (function(){
                       '<td>' + customs[i].eye_color + '</td>'+
                       '<td>' + customs[i].birth_year + '</td>'+
                       '<td>' + customs[i].gender + '</td>'+
-                      '<td>' + '<button id="'+customs[i].id+'" class="button-view btn btn-success">View</button>' + '</td>'+
+                      '<td>' + '<button id="'+customs[i].url+'" class="button-view btn btn-success">View</button>' + '</td>'+
                     '</tr>';
     }
     $('#characters-table').append(content);
